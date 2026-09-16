@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+	--primary: #111827;
+	--secondary: #f59e0b;
+	--tertiary: #10b981;
+	--user-active: #6366f1;
+	--user: #6b7280;
+    --bg-active: #EEEEFE;
+	--border: #e5e7ec;
+}
+
+@theme inline {
+	--color-primary: var(--primary);
+	--color-secondary: var(--secondary);
+	--color-tertiary: var(--tertiary);
+	--color-user: var(--user);
+	--color-user-active: var(--user-active);
+	--color-bg-active: var(--bg-active);
+	--color-border: var(--border);
+}
+
+
