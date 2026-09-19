@@ -9,6 +9,10 @@ export interface User {
     name: string;
     catchPhrase: string;
   }
+  address:{
+    street:string;
+    city:string
+  }
 }
 
 export interface CreateUserPayload {

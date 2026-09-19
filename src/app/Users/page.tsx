@@ -1,82 +1,22 @@
-"use client";
-
-import { FormEvent, useState } from "react";
-
-import { useUsers } from "@/src/hooks/useUsers";
-
-export default function UserPage() {
-  const { users, loading, error, addUser } = useUsers();
-
-  const [name, setName] = useState("");
-
-  const [username, setUsername] = useState("");
-
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!name || !username || !email) {
-      return;
-    }
-
-    await addUser({
-      name,
-      username,
-      email,
-      phone,
-    });
-
-    setName("");
-    setUsername("");
-    setEmail("");
-    setPhone("");
-  };
-
+import React from "react";
+import Header from "@/src/components/header/page";
+import Component1 from "@/src/components/dashboardComponets/Component1/component1";
+import BarComponent from "@/src/components/Users/BarComponent/page";
+function page() {
   return (
-    <main>
-      <h1>Users</h1>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          value={name}
-          placeholder="Name"
-          onChange={(event) => setName(event.target.value)}
+    <div className="flex flex-col pb-[100px]">
+      <Header title="Members" />
+      <div className="space-y-6 w-full max-w-7xl mx-auto  px-4 sm:px-6  ">
+        <Component1
+          heading="Members"
+          subheading="Manage and explore your team members."
+          buttonText="Add Member"
+          button={true}
         />
-
-        <input
-          value={username}
-          placeholder="Username"
-          onChange={(event) => setUsername(event.target.value)}
-        />
-
-        <input
-          value={email}
-          placeholder="Email"
-          onChange={(event) => setEmail(event.target.value)}
-        />
-
-        <button type="submit" className="cursor-pointer">
-          Create User
-        </button>
-      </form>
-
-      {loading && <p>Loading...</p>}
-
-      {error && <p>{error}</p>}
-
-      {!loading && !error && users.length === 0 && <p>No users found.</p>}
-
-      {!loading &&
-        users.length > 0 &&
-        users.map((user) => (
-          <div key={user.id}>
-            <h2>{user.name}</h2>
-            <p>{user.username}</p>
-            <p>{user.email}</p>
-          </div>
-        ))}
-    </main>
+        <BarComponent />
+      </div>
+    </div>
   );
 }
+
+export default page;

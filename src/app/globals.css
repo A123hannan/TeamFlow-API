@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-	--primary: #111827;
+	--primary: #4F39F6;
 	--secondary: #f59e0b;
 	--tertiary: #10b981;
 	--user-active: #6366f1;
@@ -20,4 +20,17 @@
 	--color-border: var(--border);
 }
 
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+html {
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+body {
+  -ms-overflow-style: none;
+}
 
