@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className="flex flex-row min-h-screen ">
         <ReduxProvider>
           <JsonSideBar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 bg-slate-50">{children}</main>
         </ReduxProvider>
       </body>
     </html>

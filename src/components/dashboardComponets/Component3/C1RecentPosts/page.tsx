@@ -28,11 +28,11 @@ function page() {
           const postComments = comments.filter(
             (comment) => comment.postId === post.id,
           );
-          const fullName = users.find((user) => user.id === post.userId);
+          const fullName = users.find((user) => user.id === post.userId)?.name;
           return (
             <PostCard
               key={post.id}
-              fullName={fullName?.name ?? "No Name"}
+              fullName={fullName ?? "No Name"}
               title={post.title}
               body={post.body}
               noOfComments={postComments.length}

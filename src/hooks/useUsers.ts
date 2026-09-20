@@ -1,19 +1,28 @@
 "use client"
 import {useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUsers,fetchUsers } from "@/src/redux-toolkit/slices/userslice";
+import { addUsers,fetchUsers ,EditUser,RemoveUser} from "@/src/redux-toolkit/slices/userslice";
 import { RootState, AppDispatch } from "@/src/redux-toolkit/store/store";
-import {CreateUserPayload} from "@/src/types/users"
+import {CreateUserPayload,UpdateUserPayload} from "@/src/types/users"
 
 export const useUsers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { users, loading, error } = useSelector((state: RootState) => state.users); 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchUsers()).unwrap();
   }, [dispatch]);
 
   const addUser = (user: CreateUserPayload) => {
-    dispatch(addUsers(user));
+    dispatch(addUsers(user)).unwrap();
   };
-  return { users, loading, error, addUser };
+   const updateUser =(user: UpdateUserPayload) =>{ 
+    dispatch(EditUser(user)).unwrap()
+  }
+
+  const deleteUser=(id: number) =>{
+    dispatch(RemoveUser(id)).unwrap()
+
+  }
+
+  return { users, loading, error, addUser,updateUser,deleteUser };
 }

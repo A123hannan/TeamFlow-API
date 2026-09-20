@@ -22,8 +22,8 @@
 // export default userSlice.reducer;
 
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
-import {getUsers,createUser} from "@/src/controllers/userController";
-import {User,CreateUserPayload} from "@/src/types/users"
+import {getUsers,createUser,updateUser,DeletedUser} from "@/src/controllers/userController";
+import {User,CreateUserPayload,UpdateUserPayload} from "@/src/types/users"
 interface UserState{
     users:User[];
     loading:boolean;
@@ -59,6 +59,30 @@ async(user:CreateUserPayload,{rejectWithValue})=>{
 }
 )
 
+export const EditUser=createAsyncThunk(
+    "users/UpdateUser",
+    async(User:UpdateUserPayload,{rejectWithValue})=>{
+        try{
+            return await updateUser(User)
+        }
+        catch(error:any){
+            return rejectWithValue("Failed to update the User.")
+        }
+    }
+)
+export const RemoveUser=createAsyncThunk(
+    "users/Deleteser",
+    async(id:number,{rejectWithValue})=>{
+        try{
+            await DeletedUser(id);
+            return id;
+        }
+        catch{
+            return rejectWithValue("Failed to delete User.")
+        }
+    }
+);
+
 const userSlice=createSlice({
     name:"users",
     initialState,
@@ -89,6 +113,35 @@ const userSlice=createSlice({
             state.loading=false;
             state.error=action.payload as string|null;
         })  
+        .addCase(EditUser.pending,(state)=>{
+            state.loading=true;
+            state.error=null;
+        })
+        .addCase(EditUser.fulfilled, (state, action) => {
+            state.loading = false;
+            const index = state.users.findIndex((u) => u.id === action.payload.id);
+            if (index !== -1) {
+                state.users[index] = { ...state.users[index], ...action.payload };
+            }
+        })
+        .addCase(EditUser.rejected,(state,action)=>{
+            state.loading=false;
+            state.error=action.payload as string|null
+        })
+        .addCase(RemoveUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(RemoveUser.fulfilled, (state, action) => {
+                state.loading = false;
+                // Filter out the deleted user by matching the id returned from the thunk
+                const deletedId = action.payload as number;
+                state.users = state.users.filter((user) => user.id !== deletedId);
+            })
+            .addCase(RemoveUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string | null;
+            });
     }
 });
 export default userSlice.reducer;

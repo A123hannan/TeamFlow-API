@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Zap,
   LayoutGrid as Dashboard,
@@ -9,15 +9,16 @@ import {
   Image as albums,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 const navLinks = [
   { logo: Dashboard, title: "Dashboard", path: "/" },
   { logo: Users, title: "Users", path: "/Users" },
   { logo: Posts, title: "Posts", path: "/Posts" },
   { logo: Todo, title: "Todos", path: "/Todos" },
-  { logo: albums, title: "Comments", path: "/Comments" },
+  { logo: albums, title: "Albums", path: "/Albums" },
 ];
 function page() {
-  const [active, setActive] = useState("Dashboard");
+  const pathname = usePathname();
   return (
     <div className="flex min-h-screen flex-col w-1/5 lg:w-1/6 bg-white gap-[32px] border-r-[2px] border-border">
       <div className="h-[80px] shrink-0 px-[20px] flex items-center gap-[10px] border-b-[2px] border-border">
@@ -36,19 +37,22 @@ function page() {
         </div>
         {navLinks.map((link) => {
           const Icon = link.logo;
+          const isActive =
+            link.path === "/"
+              ? pathname === "/"
+              : pathname.startsWith(link.path);
 
           return (
             <Link
               href={link.path}
               key={link.title}
-              className={`group cursor-pointer flex gap-3  px-[14px] py-[10px]  rounded-[8px]  ${active === link.title ? "bg-bg-active text-user-active" : "text-bg-active hover:bg-bg-active text-user"}`}
-              onClick={() => setActive(link.title)}
+              className={`group cursor-pointer flex gap-3  px-[14px] py-[10px]  rounded-[8px]  ${isActive ? "bg-bg-active text-user-active" : "text-bg-active hover:bg-bg-active text-user"}`}
             >
               <div>
                 <Icon className="group-hover:text-primary" />
               </div>
               <div
-                className={`flex items-center font-medium text-sm leading-[100%] tracking-[0%] text-slate-600 group-hover:text-primary ${active === link.title ? "bg-bg-active text-user-active" : ""} group-cursor-pointer:`}
+                className={`flex items-center font-medium text-sm leading-[100%] tracking-[0%] text-slate-600 group-hover:text-primary ${isActive ? "bg-bg-active text-user-active" : ""} group-cursor-pointer:`}
               >
                 {link.title}
               </div>

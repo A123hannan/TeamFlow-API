@@ -1,11 +1,11 @@
 export interface todos{
-    userid:number,
+    userId:number,
     id:number, 
     title:string,
     completed:boolean
 }
 export interface CreateTodoPayload{
-    userid:number,
+    userId:number,
     title:string,
     completed:boolean
 }
