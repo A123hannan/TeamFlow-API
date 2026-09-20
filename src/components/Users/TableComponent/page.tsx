@@ -137,7 +137,7 @@ function page({ sortedUsers }: props) {
           className={`${sortedUsers.length < usersPerPage ? "hidden" : ""}flex items-center justify-center gap-1 py-4`}
         >
           <button
-            className="cursor-pointer  flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className={`${currentPage === 0 ? "cursor-no-drop  disabled:opacity-45" : "cursor-pointer"}  flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors`}
             onClick={handlePrevious}
           >
             <ChevronLeft size={14} />
