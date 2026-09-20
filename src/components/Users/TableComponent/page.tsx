@@ -30,10 +30,10 @@ function page({ sortedUsers }: props) {
     (currentPage + 1) * usersPerPage,
   );
   const handleNext = (e: any) => {
-    setCurrentPage((prev) => (prev < noOfPages - 1 ? prev + 1 : 0));
+    setCurrentPage((prev) => (prev < noOfPages - 1 ? prev + 1 : noOfPages - 1));
   };
   const handlePrevious = (e: any) => {
-    setCurrentPage((prev) => (prev > 0 ? prev - 1 : noOfPages - 1));
+    setCurrentPage((prev) => (prev > 0 ? prev - 1 : 0));
   };
   const getVisiblePagesindex = () => {
     const pages = 3;
