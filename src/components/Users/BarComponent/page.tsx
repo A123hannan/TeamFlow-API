@@ -59,11 +59,9 @@ function page() {
           <select
             value={company}
             onChange={(e) => setCompany(e.target.value)}
-            className="px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
           >
-            <option value="All Companies" disabled>
-              All Companies
-            </option>
+            <option value="All Companies">All Companies</option>
             {distinctCompanies.map((company) => (
               <option key={company} value={company}>
                 {company}
@@ -73,11 +71,9 @@ function page() {
           <select
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
           >
-            <option value="All Cities" disabled>
-              All Cities
-            </option>
+            <option value="All Cities">All Cities</option>
             {distinctCities.map((city) => (
               <option value={city} key={city}>
                 {city}
@@ -87,7 +83,7 @@ function page() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
           >
             <option value="Sort:ID">Sort:ID</option>
             <option value="Name A-Z">Name A-Z</option>

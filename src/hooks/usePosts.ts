@@ -1,5 +1,5 @@
 "use client"
-import { UseSelector,useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {fetchPosts,addPost} from "@/src/redux-toolkit/slices/postSlice"
 import {useEffect} from "react"
 import { AppDispatch, RootState } from "../redux-toolkit/store/store";

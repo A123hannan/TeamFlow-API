@@ -60,7 +60,7 @@ const albumSlice=createSlice({
             })
         .addCase(addAlbum.fulfilled, (state, action) => {
                 state.loading = false;
-                state.albums.push(action.payload);
+            state.albums.unshift(action.payload);
             })
         .addCase(addAlbum.rejected, (state, action) => {
                 state.loading = false;

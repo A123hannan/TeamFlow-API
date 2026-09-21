@@ -4,7 +4,6 @@ id:number,
 title:string
 }
 export interface CreateAlbumPayload{
-    userId:number,
-id:number,
+userId:number|string,
 title:string,
 }

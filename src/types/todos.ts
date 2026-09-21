@@ -5,7 +5,7 @@ export interface todos{
     completed:boolean
 }
 export interface CreateTodoPayload{
-    userId:number,
+    userId:number|string,
     title:string,
     completed:boolean
 }

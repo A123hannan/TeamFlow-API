@@ -104,7 +104,7 @@ function page({ sortedUsers }: props) {
                 <td className="px-5 py-3.5">
                   <div className="flex items-center justify-end gap-1">
                     <Link
-                      href="#"
+                      href={`/Users/${user.id}`}
                       className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
                     >
                       <Eye size={14} className="" />

@@ -2,7 +2,11 @@
 import React, { useState } from "react";
 import { RefreshCcw, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import AddCard from "@/src/components/Users/AddUserCard/card";
+import { usePathname } from "next/navigation";
+import AddUserCard from "@/src/components/Users/AddUserCard/card";
+import AddPostCard from "@/src/components/Posts/AddPostCard/Card";
+import AddTodoCard from "@/src/components/Todos/AddTodoCard/Card";
+import AddAlbumCard from "@/src/components/Albums/AlbumAddCard/Card";
 interface props {
   heading: string;
   subheading: string;
@@ -11,16 +15,32 @@ interface props {
 }
 function component1({ heading, subheading, button, buttonText }: props) {
   const router = useRouter();
-  const [addOpen, setAddOpen] = useState(false);
-  
+  const [addUserOpen, setAddUserOpen] = useState(false);
+  const [addPostOpen, setAddPostOpen] = useState(false);
+  const [addTodoOpen, setAddTodoOpen] = useState(false);
+  const [addAlbumOpen, setAddAlbumOpen] = useState(false);
+  const PathName = usePathname();
+
   const handleRefresh = () => {
     router.refresh();
   };
   const handleClick = () => {
     if (!button) {
       handleRefresh();
+    } else {
+      if (PathName === "/Users") {
+        setAddUserOpen(true);
+      }
+      if (PathName === "/Posts") {
+        setAddPostOpen(true);
+      }
+      if (PathName === "/Todos") {
+        setAddTodoOpen(true);
+      }
+      if (PathName === "/Albums") {
+        setAddAlbumOpen(true);
+      }
     }
-    setAddOpen(true);
   };
 
   return (
@@ -47,7 +67,17 @@ function component1({ heading, subheading, button, buttonText }: props) {
           )}
         </button>
       </div>
-      {addOpen ? <AddCard setAddOpen={setAddOpen} /> : ""}
+      {addUserOpen ? (
+        <AddUserCard setAddUserOpen={setAddUserOpen} />
+      ) : addPostOpen ? (
+        <AddPostCard setAddPostOpen={setAddPostOpen} />
+      ) : addTodoOpen ? (
+        <AddTodoCard setAddTodoOpen={setAddTodoOpen} />
+      ) : addAlbumOpen ? (
+        <AddAlbumCard setAddAlbumOpen={setAddAlbumOpen} />
+      ) : (
+        ""
+      )}
     </>
   );
 }

@@ -5,10 +5,10 @@ import { X } from "lucide-react";
 import { useUsers } from "@/src/hooks/useUsers";
 import { CreateUserPayload } from "@/src/types/users";
 interface Props {
-  setAddOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setAddUserOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Card({ setAddOpen }: Props) {
+function Card({ setAddUserOpen }: Props) {
   const { addUser } = useUsers();
 
   const [formData, setFormData] = useState<CreateUserPayload>({
@@ -65,20 +65,20 @@ function Card({ setAddOpen }: Props) {
 
     addUser(formData);
 
-    setAddOpen(false);
+    setAddUserOpen(false);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="fixed inset-0 z-0 bg-black/40" />
 
-      <div className="relative bg-white rounded-xl shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto">
+      <div className="relative z-10 bg-white rounded-xl shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
           <h2 className="text-base font-semibold text-slate-900">Add Member</h2>
 
           <button
             type="button"
-            onClick={() => setAddOpen(false)}
+            onClick={() => setAddUserOpen(false)}
             className="cursor-pointer text-slate-400 hover:text-slate-600 transition-colors rounded-md p-1 hover:bg-slate-100"
           >
             <X size={18} />
@@ -246,7 +246,7 @@ function Card({ setAddOpen }: Props) {
 
             <div className="flex justify-end gap-3 pt-2 border-t border-slate-100">
               <button
-                onClick={() => setAddOpen(false)}
+                onClick={() => setAddUserOpen(false)}
                 type="button"
                 className="cursor-pointer px-4 py-2 text-sm font-medium text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50"
               >

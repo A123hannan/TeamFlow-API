@@ -5,8 +5,7 @@ title:string,
 body:string
 }
 export interface CreatePostPayload{
-    userId:number,
-id:number,
+    userId:number|string,
 title:string,
 body:string
 }

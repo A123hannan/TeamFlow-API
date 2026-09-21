@@ -15,10 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable}  h-full antialiased`}>
-      <body className="flex flex-row min-h-screen ">
+      <body className="flex min-h-screen flex-row overflow-x-hidden">
         <ReduxProvider>
           <JsonSideBar />
-          <main className="flex-1 bg-slate-50">{children}</main>
+          <main className="min-w-0 flex-1 bg-slate-50">{children}</main>
         </ReduxProvider>
       </body>
     </html>

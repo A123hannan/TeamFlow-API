@@ -74,7 +74,7 @@ function page() {
             <option value="All members">All members</option>
             {users.map((user) => (
               <option key={user.id} value={user.id}>
-                {user.username}
+                {user.name}
               </option>
             ))}
           </select>
