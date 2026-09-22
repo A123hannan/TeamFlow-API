@@ -49,7 +49,7 @@ function Page({
           <span className="text-xs">{noOfComments} comment</span>
         </div>
         <Link
-          href="#"
+          href={`/Posts/${id}`}
           className="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
         >
           View Post

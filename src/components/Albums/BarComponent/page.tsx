@@ -90,6 +90,7 @@ function page() {
           return (
             <AlbumCard
               key={album.id}
+              id={album.id}
               albumTitle={album.title}
               noOfPhotosInAlbum={noOfPhotosInAlbums}
               albumAuthor={albumAuthor}

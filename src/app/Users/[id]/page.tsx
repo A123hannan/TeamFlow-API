@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { getUser } from "@/src/components/Users/getUser";
 
 import { useUsers } from "@/src/hooks/useUsers";
 import { usePosts } from "@/src/hooks/usePosts";

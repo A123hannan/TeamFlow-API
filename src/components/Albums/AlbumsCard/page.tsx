@@ -3,6 +3,7 @@ import { FolderOpen, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 interface props {
+  id: number;
   albumTitle: string;
   albumAuthor?: string;
   noOfPhotosInAlbum: number;
@@ -17,7 +18,13 @@ const colorThemes = [
   { bg: "bg-purple-50", text: "text-purple-600" },
 ];
 
-function page({ albumTitle, albumAuthor, noOfPhotosInAlbum, index }: props) {
+function page({
+  albumTitle,
+  albumAuthor,
+  noOfPhotosInAlbum,
+  index,
+  id,
+}: props) {
   const theme = colorThemes[index % colorThemes.length];
 
   return (
@@ -41,7 +48,7 @@ function page({ albumTitle, albumAuthor, noOfPhotosInAlbum, index }: props) {
             {noOfPhotosInAlbum} Photos
           </span>
           <Link
-            href="#"
+            href={`/Albums/${id}`}
             className="text-xs font-medium text-indigo-600 hover:text-indigo-700 flex items-center gap-1 transition-colors"
           >
             Open
