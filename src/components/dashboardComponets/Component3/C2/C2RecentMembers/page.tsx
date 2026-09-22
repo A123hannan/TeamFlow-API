@@ -21,7 +21,7 @@ function page() {
       </div>
       <div className="divide-y divide-slate-50">
         {RecentUsers.map((user) => (
-          <Link href="#" className="" key={user.id}>
+          <Link href={`/Users/${user.id}`} className="" key={user.id}>
             <UserCard id={user.id} fullName={user.name} email={user.email} />
           </Link>
         ))}

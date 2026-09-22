@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Link from "next/link";
 import { User } from "@/src/types/users";
 import {
@@ -110,7 +110,7 @@ function page({ sortedUsers }: props) {
                       <Eye size={14} className="" />
                     </Link>
                     <Link
-                      href="#"
+                      href={`/Users/${user.id}/Edit`}
                       className="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
                     >
                       <Edit size={14} />
