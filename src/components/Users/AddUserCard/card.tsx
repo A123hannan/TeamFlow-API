@@ -158,7 +158,7 @@ function Card({ setAddUserOpen }: Props) {
 
                   <input
                     name="website"
-                    type="url"
+                    type="text"
                     value={formData.website}
                     onChange={handleChange}
                     placeholder="example.com"

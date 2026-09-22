@@ -7,26 +7,28 @@ import { useParams } from "next/navigation";
 import { UpdateUserPayload } from "@/src/types/users";
 interface Props {
   setUpdateUserOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  id:Number
+  id: Number;
 }
 
-function Card({ setUpdateUserOpen,id }: Props) {
-  const { users,updateUser } = useUsers();
-  const user=users.find((user)=>user.id===id)
+function Card({ setUpdateUserOpen, id }: Props) {
+  const { users, updateUser } = useUsers();
+  
+  const user = users.find((user) => user.id === id);
 
   const [formData, setFormData] = useState<UpdateUserPayload>({
-    name: user?.name??"",
-    username: user?.username??"",
-    email: user?.email??"",
-    phone: user?.phone??"",
-    website: user?.website??"",
+    id: user?.id ?? 1,
+    name: user?.name ?? "",
+    username: user?.username ?? "",
+    email: user?.email ?? "",
+    phone: user?.phone ?? "",
+    website: user?.website ?? "",
     address: {
-      street: user?.address.street??"",
-      city: user?.address.city??"",
-      zipcode: user?.address.zipcode??"",
+      street: user?.address.street ?? "",
+      city: user?.address.city ?? "",
+      zipcode: user?.address.zipcode ?? "",
     },
     company: {
-      name: user?.company.name??"",
+      name: user?.company.name ?? "",
     },
   });
 
@@ -77,7 +79,9 @@ function Card({ setUpdateUserOpen,id }: Props) {
 
       <div className="relative z-10 bg-white rounded-xl shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <h2 className="text-base font-semibold text-slate-900">Edit Member</h2>
+          <h2 className="text-base font-semibold text-slate-900">
+            Edit Member
+          </h2>
 
           <button
             type="button"
@@ -161,7 +165,7 @@ function Card({ setUpdateUserOpen,id }: Props) {
 
                   <input
                     name="website"
-                    type="url"
+                    type="text"
                     value={formData.website}
                     onChange={handleChange}
                     placeholder="example.com"
@@ -260,7 +264,7 @@ function Card({ setUpdateUserOpen,id }: Props) {
                 type="submit"
                 className="cursor-pointer px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-60"
               >
-                Add Member
+                Save changes
               </button>
             </div>
           </form>

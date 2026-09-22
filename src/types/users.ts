@@ -31,6 +31,7 @@ export interface CreateUserPayload {
   };
 }
 export interface UpdateUserPayload {
+   id: number;
   name: string;
   username: string;
   email: string;
