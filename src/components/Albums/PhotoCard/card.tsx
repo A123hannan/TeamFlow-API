@@ -34,7 +34,7 @@ function card({
           <img
             alt="officia porro iure quia iusto qui ipsa ut modi"
             className="w-full h-full object-cover"
-            src="https://picsum.photos/seed/3/800/800"
+            src={`https://picsum.photos/seed/${selectedPhoto.id}/800/800`}
           />
         </div>
         <div className="p-4 sm:p-5">
