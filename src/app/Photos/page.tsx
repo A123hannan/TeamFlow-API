@@ -14,9 +14,7 @@ export default function PhotosPage() {
           <ResourceState message="Loading photos. Please wait..." />
         ) : error ? (
           <ResourceState message={`Unable to load photos: ${error}`} error />
-        ) : photos.length === 0 ? (
-          <ResourceState message="No photos are available yet." />
-        ) : (
+        ) :  (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {photos.map((photo) => (
               <article

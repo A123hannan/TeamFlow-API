@@ -26,8 +26,6 @@ function page() {
           <ResourceState message="Loading tasks. Please wait..." />
         ) : error ? (
           <ResourceState message={`Unable to load tasks: ${error}`} error />
-        ) : todos.length === 0 ? (
-          <ResourceState message="No tasks are available yet." />
         ) : (
           <>
             <C1 />

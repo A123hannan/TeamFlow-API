@@ -25,8 +25,6 @@ function page() {
           <ResourceState message="Loading albums. Please wait..." />
         ) : error ? (
           <ResourceState message={`Unable to load albums: ${error}`} error />
-        ) : albums.length === 0 ? (
-          <ResourceState message="No albums are available yet." />
         ) : (
           <BarComponent />
         )}

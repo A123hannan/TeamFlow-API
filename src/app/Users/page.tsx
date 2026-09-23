@@ -25,8 +25,6 @@ function page() {
           <ResourceState message="Loading members. Please wait..." />
         ) : error ? (
           <ResourceState message={`Unable to load members: ${error}`} error />
-        ) : users.length === 0 ? (
-          <ResourceState message="No members are available yet." />
         ) : (
           <BarComponent />
         )}

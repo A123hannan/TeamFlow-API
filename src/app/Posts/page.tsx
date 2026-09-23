@@ -25,9 +25,7 @@ function page() {
           <ResourceState message="Loading posts. Please wait..." />
         ) : error ? (
           <ResourceState message={`Unable to load posts: ${error}`} error />
-        ) : posts.length === 0 ? (
-          <ResourceState message="No posts are available yet." />
-        ) : (
+        ) :  (
           <BarComponent />
         )}
       </div>
