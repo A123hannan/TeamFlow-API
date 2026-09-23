@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Plus, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, ExternalLink } from "lucide-react";
 
+import { Photo } from "@/src/types/photos";
+
+import PhotoCard from "@/src/components/Albums/PhotoCard/card";
 import UpdateAlbumCard from "@/src/components/Albums/UpdateAlbumCard/page";
 import DeleteAlbumCard from "@/src/components/Albums/DeleteAlbumCard/page";
 
@@ -21,6 +24,13 @@ function page() {
   const [addPhotoOpen, setAddPhotoOpen] = useState(false);
   const [editAlbumOpen, setEditAlbumOpen] = useState(false);
   const [deletePhotoOpen, setDeletePhotoOpen] = useState(false);
+
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo>();
+  const [photoSelection, setPhotoSelection] = useState(false);
+  const handlePhotoSelection = (photo: Photo) => {
+    setSelectedPhoto(photo);
+    setPhotoSelection(true);
+  };
 
   const albumPhotos = photos.filter(
     (photo) => photo.albumId === Number(params?.id),
@@ -94,6 +104,14 @@ function page() {
                     loading="lazy"
                     src={`https://picsum.photos/seed/${albumPhoto.id}/800/800`}
                   ></img>
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center">
+                    <span
+                      onClick={() => handlePhotoSelection(albumPhoto)}
+                      className="p-2 bg-white rounded-full"
+                    >
+                      <ExternalLink size={18} />
+                    </span>
+                  </div>
                   {/* <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div> */}
                 </div>
               );
@@ -111,6 +129,12 @@ function page() {
         <DeleteAlbumCard
           setDeleteAlbumOpen={setDeletePhotoOpen}
           id={Number(params?.id)}
+        />
+      )}
+      {photoSelection && (
+        <PhotoCard
+          selectedPhoto={selectedPhoto || albumPhotos[0]}
+          setPhotoSelection={setPhotoSelection}
         />
       )}
     </>
