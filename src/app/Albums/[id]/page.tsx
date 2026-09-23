@@ -82,20 +82,22 @@ function page() {
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {albumPhotos.map((albumPhoto) => (
-              <div
-                key={albumPhoto.id}
-                className="group relative aspect-square bg-slate-100 rounded-xl overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-400 transition-all"
-              >
-                <img
-                  alt="accusamus beatae ad facilis cum similique qui sunt"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  src="https://placehold.co/150x150/e2e8f0/94a3b8?text=IMG"
-                ></img>
-                {/* <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div> */}
-              </div>
-            ))}
+            {albumPhotos.map((albumPhoto) => {
+              return (
+                <div
+                  key={albumPhoto.id}
+                  className="group relative aspect-square bg-slate-100 rounded-xl overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-400 transition-all"
+                >
+                  <img
+                    alt="accusamus beatae ad facilis cum similique qui sunt"
+                    className="w-full h-full object-cover group-hover:scale-120 transition-transform duration-300"
+                    loading="lazy"
+                    src={`https://picsum.photos/seed/${albumPhoto.id}/800/800`}
+                  ></img>
+                  {/* <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div> */}
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>
