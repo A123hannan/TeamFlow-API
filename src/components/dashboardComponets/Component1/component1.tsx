@@ -22,7 +22,8 @@ function component1({ heading, subheading, button, buttonText }: props) {
   const PathName = usePathname();
 
   const handleRefresh = () => {
-    router.refresh();
+    // router.refresh();
+    window.location.reload();
   };
   const handleClick = () => {
     if (!button) {

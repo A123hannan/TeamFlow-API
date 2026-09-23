@@ -12,7 +12,7 @@ function Card({ setAddPostOpen }: props) {
   const { users } = useUsers();
   const { addPosts } = usePosts();
   const [formData, setFormData] = useState<CreatePostPayload>({
-    userId: 1,
+    userId: "",
     title: "",
     body: "",
   });
