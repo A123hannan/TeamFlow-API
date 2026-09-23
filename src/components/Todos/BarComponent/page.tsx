@@ -6,7 +6,7 @@ import { useIsMobile } from "@/src/hooks/useIsMobile";
 import { SearchIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import TodoCard from "../BarComponent/todoCard/todoCard";
 function page() {
-  const { todos } = useTodos();
+  const { todos, toggleTask } = useTodos();
   const { users } = useUsers();
   const isMobile = useIsMobile();
 
@@ -173,6 +173,7 @@ function page() {
               userId={todo.userId}
               title={todo.title}
               completed={todo.completed}
+              onToggle={toggleTask}
             />
           ))}
         </div>

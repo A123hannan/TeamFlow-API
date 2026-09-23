@@ -37,7 +37,14 @@ export const addTodos=createAsyncThunk(
 const todoSlice=createSlice({
     name:"todos",
     initialState,
-    reducers:{},
+    reducers:{
+        toggleTodo:(state, action: { payload: number }) => {
+            const todo = state.todos.find((item) => item.id === action.payload);
+            if (todo) {
+                todo.completed = !todo.completed;
+            }
+        },
+    },
     extraReducers:(builder)=>{
         builder
         .addCase(fetchTodos.pending,(state)=>{
@@ -66,4 +73,5 @@ const todoSlice=createSlice({
         })
     }
 });
+export const { toggleTodo } = todoSlice.actions;
 export default todoSlice.reducer;

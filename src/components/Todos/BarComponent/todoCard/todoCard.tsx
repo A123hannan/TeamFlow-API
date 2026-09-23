@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { CircleCheckBigIcon, Circle } from "lucide-react";
 import { todos } from "@/src/types/todos";
 import { useUsers } from "@/src/hooks/useUsers";
-function todoCard({ userId, id, title, completed }: todos) {
+type TodoCardProps = todos & {
+  onToggle: (id: number) => void;
+};
+
+function todoCard({ userId, id, title, completed, onToggle }: TodoCardProps) {
   const { users } = useUsers();
   const userName = users.find((user) => user.id === userId)?.name || "Unknown";
-  const [isCompleted, setIsCompleted] = useState(completed);
-
   const handleTask = () => {
-    setIsCompleted((prev) => !prev);
+    onToggle(id);
   };
 
   return (
@@ -19,7 +21,7 @@ function todoCard({ userId, id, title, completed }: todos) {
         className="cursor-pointer shrink-0 transition-colors"
         onClick={handleTask}
       >
-        {isCompleted ? (
+        {completed ? (
           <CircleCheckBigIcon size={17} className="text-green-500" />
         ) : (
           <Circle
@@ -31,7 +33,7 @@ function todoCard({ userId, id, title, completed }: todos) {
 
       <span
         className={
-          isCompleted
+          completed
             ? "flex-1 text-sm leading-relaxed line-through text-slate-400"
             : "flex-1 text-sm leading-relaxed text-slate-700"
         }
