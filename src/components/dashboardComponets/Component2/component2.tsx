@@ -61,29 +61,16 @@ function component2() {
       subTitle: "Stored in albums",
     },
   ];
-  const cols = 5;
-  const COLS_WIDTH_MAP: Record<number, string> = {
-    2: "w-full sm:w-[calc(50%-16px)] max-w-[488px] sm:max-w-none",
-    3: "w-full min-[810px]:w-[calc(50%-16px)] 2xl:w-[calc(33.333%-14px)] max-w-[488px] sm:max-w-none",
-    4: "w-full sm:w-[calc(50%-16px)] min-[1115px]:w-[calc(33.333%-22px)] 2xl:w-[calc(25%-15px)] max-w-[488px] sm:max-w-none",
-    5: "w-full sm:w-[calc(50%-16px)] md:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] 2xl:w-[calc(20%-16px)] max-w-[488px] sm:max-w-none",
-  };
-  const widthClass = COLS_WIDTH_MAP[cols] ?? COLS_WIDTH_MAP[3];
-
   return (
-    <div className="flex flex-wrap justify-center gap-4">
-      {details.map((detail, index) => (
-        <div
-          key={`${detail.title}-${index}`}
-          className={`${widthClass} flex justify-center`}
-        >
-          <Card
-            Icon={detail.icon}
-            number={detail.Number}
-            title={detail.title}
-            subTitle={detail.subTitle}
-          />
-        </div>
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {details.map((detail) => (
+        <Card
+          key={detail.title}
+          Icon={detail.icon}
+          number={detail.Number}
+          title={detail.title}
+          subTitle={detail.subTitle}
+        />
       ))}
     </div>
   );
