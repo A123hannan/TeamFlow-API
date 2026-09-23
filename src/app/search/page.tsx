@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUsers } from "@/src/hooks/useUsers";
@@ -15,7 +15,7 @@ const typeLabelMap = {
   albums: "ALBUMS",
 };
 
-export default function SearchPage() {
+function SearchPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = (searchParams.get("q") ?? "").trim();
@@ -170,5 +170,19 @@ export default function SearchPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-slate-50 text-sm text-slate-500">
+          Loading search...
+        </div>
+      }
+    >
+      <SearchPageContent />
+    </Suspense>
   );
 }

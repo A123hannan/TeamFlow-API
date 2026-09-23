@@ -1,15 +1,16 @@
 "use client";
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAlbum } from "@/src/hooks/useAlbum";
 import { useUsers } from "@/src/hooks/useUsers";
 import { usePhotos } from "@/src/hooks/usePhotos";
 import { SearchIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import AlbumCard from "../AlbumsCard/page";
+import { useIsMobile } from "@/src/hooks/useIsMobile";
 function page() {
   const { albums } = useAlbum();
   const { users } = useUsers();
   const { photos } = usePhotos();
+  const isMobile = useIsMobile();
 
   const [member, setMember] = useState("All members");
   const [search, setSearch] = useState("");
@@ -30,9 +31,12 @@ function page() {
     setCurrentPage(0);
   };
 
-  const cardsPerPage = 12;
+  const cardsPerPage = isMobile ? 5 : 12;
   const totalPages = Math.ceil(filteredalbums.length / cardsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, Math.max(totalPages - 1, 0)));
+  }, [totalPages]);
   const handleNext = () => {
     setCurrentPage((prev) => Math.min(prev + 1, Math.max(totalPages - 1, 0)));
   };

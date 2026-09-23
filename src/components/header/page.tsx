@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -7,7 +7,7 @@ interface props {
   title?: string;
 }
 
-function Header({ title }: props) {
+function HeaderContent({ title }: props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentQuery = searchParams.get("q") ?? "";
@@ -65,6 +65,18 @@ function Header({ title }: props) {
         </div>
       </div>
     </header>
+  );
+}
+
+function Header({ title }: props) {
+  return (
+    <Suspense
+      fallback={
+        <header className="h-16 w-full shrink-0 border-b-2 border-border bg-white lg:h-20" />
+      }
+    >
+      <HeaderContent title={title} />
+    </Suspense>
   );
 }
 

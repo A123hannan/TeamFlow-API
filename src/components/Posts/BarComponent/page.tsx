@@ -1,22 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { usePosts } from "@/src/hooks/usePosts";
 import { useUsers } from "@/src/hooks/useUsers";
 import { useComments } from "@/src/hooks/useComments";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PostCard from "../PostCard/page";
+import { useIsMobile } from "@/src/hooks/useIsMobile";
 function page() {
   const { posts, loading, error } = usePosts();
   const { users } = useUsers();
   const { comments } = useComments();
+  const isMobile = useIsMobile();
 
   const [author, setAuthor] = useState("All Authors");
   const [sort, setSort] = useState("Newest");
   const [search, setSearch] = useState("");
 
-  const postsPerPage = 9;
+  const postsPerPage = isMobile ? 5 : 9;
   const [currentPage, setCurrentPage] = useState(0);
   const handleNext = () => {
     setCurrentPage((prev) => Math.min(prev + 1, Math.max(totalPages - 1, 0)));
@@ -79,6 +81,9 @@ function page() {
     return 0;
   });
   const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, Math.max(totalPages - 1, 0)));
+  }, [totalPages]);
 
   const postsToShow = sortedPosts.slice(
     currentPage * postsPerPage,

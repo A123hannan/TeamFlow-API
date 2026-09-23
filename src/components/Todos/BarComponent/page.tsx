@@ -1,13 +1,14 @@
 "use client";
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTodos } from "@/src/hooks/useTodos";
 import { useUsers } from "@/src/hooks/useUsers";
+import { useIsMobile } from "@/src/hooks/useIsMobile";
 import { SearchIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import TodoCard from "../BarComponent/todoCard/todoCard";
 function page() {
   const { todos } = useTodos();
   const { users } = useUsers();
+  const isMobile = useIsMobile();
 
   const [member, setMember] = useState("All members");
   const [sort, setSort] = useState("Default");
@@ -60,8 +61,11 @@ function page() {
 
     return 0;
   });
-  const cardsPerPage = 15;
+  const cardsPerPage = isMobile ? 5 : 15;
   const totalPages = Math.ceil(sortedTodos.length / cardsPerPage);
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, Math.max(totalPages - 1, 0)));
+  }, [totalPages]);
   const handleNext = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
   };
