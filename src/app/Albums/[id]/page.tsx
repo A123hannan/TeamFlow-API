@@ -29,8 +29,8 @@ function page() {
   const author = users.find((user) => user.id === album?.userId);
   return (
     <>
-      <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-        <div className="max-w-6xl mx-auto space-y-5">
+      <main className="flex-1 overflow-y-auto p-4 pt-16 lg:p-6">
+        <div className="w-full max-w-6xl mx-auto space-y-5">
           <Link
             href={"/Albums"}
             className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 transition-colors"
@@ -107,7 +107,7 @@ function page() {
       )}
       {deletePhotoOpen && params?.id !== null && (
         <DeleteAlbumCard
-          setDeleteAlbumOpen={setAddPhotoOpen}
+          setDeleteAlbumOpen={setDeletePhotoOpen}
           id={Number(params?.id)}
         />
       )}

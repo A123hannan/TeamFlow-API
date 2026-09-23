@@ -45,7 +45,7 @@ function component1({ heading, subheading, button, buttonText }: props) {
 
   return (
     <>
-      <div className="mb-6 mt-8 flex flex-row items-center justify-between gap-3">
+      <div className="mb-6 mt-8 flex flex-col items-start justify-between gap-3 min-[420px]:flex-row min-[420px]:items-center">
         <div>
           <h2 className="text-xl font-semibold text-slate-900">{heading}</h2>
           <p className="text-sm text-slate-500  mt-[2px]">{subheading}</p>

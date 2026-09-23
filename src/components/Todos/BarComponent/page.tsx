@@ -135,7 +135,7 @@ function page() {
               setCurrentPage(0);
             }}
             value={member}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
           >
             <option value="All members">All members</option>
             {users.map((user) => (
@@ -151,7 +151,7 @@ function page() {
               setSort(e.target.value);
               setCurrentPage(0);
             }}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
             value={sort}
           >
             <option value="Default">Default</option>
@@ -190,15 +190,16 @@ function page() {
             Prev
           </button>
           {/* {Array.from({ length: noOfPages }).map((_, index) => ( */}
-          {sortedTodos.length>0&&getVisiblePagesIndex().map((index) => (
-            <button
-              className={`cursor-pointer  w-8 h-8 text-sm font-medium rounded-lg transition-colors ${index === currentPage ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
-              onClick={() => setCurrentPage(index)}
-              key={index}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {sortedTodos.length > 0 &&
+            getVisiblePagesIndex().map((index) => (
+              <button
+                className={`cursor-pointer  w-8 h-8 text-sm font-medium rounded-lg transition-colors ${index === currentPage ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+                onClick={() => setCurrentPage(index)}
+                key={index}
+              >
+                {index + 1}
+              </button>
+            ))}
           <button
             className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             onClick={handleNext}

@@ -28,7 +28,7 @@ function page({
   const theme = colorThemes[index % colorThemes.length];
 
   return (
-    <div className="bg-white rounded-xl border border-slate-100 overflow-hidden hover:border-slate-200 hover:shadow-sm transition-all group">
+    <div className="w-full min-w-0 bg-white rounded-xl border border-slate-100 overflow-hidden hover:border-slate-200 hover:shadow-sm transition-all group">
       <div
         className={`h-36 flex items-center justify-center relative ${theme.bg}`}
       >

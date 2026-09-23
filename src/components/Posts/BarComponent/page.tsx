@@ -117,7 +117,7 @@ function page() {
               setAuthor(e.target.value);
               setCurrentPage(0);
             }}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
           >
             <option value="All Authors">All Authors</option>
 
@@ -134,7 +134,7 @@ function page() {
               setSort(e.target.value);
               setCurrentPage(0);
             }}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
           >
             <option value="Newest">Newest</option>
             <option value="Name A-Z">Name A-Z</option>

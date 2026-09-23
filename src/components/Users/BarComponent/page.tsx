@@ -80,7 +80,7 @@ function page() {
           <select
             value={company}
             onChange={(e) => setCompany(e.target.value)}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
           >
             <option value="All Companies">All Companies</option>
             {distinctCompanies.map((company) => (
@@ -92,7 +92,7 @@ function page() {
           <select
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
           >
             <option value="All Cities">All Cities</option>
             {distinctCities.map((city) => (
@@ -104,7 +104,7 @@ function page() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
           >
             <option value="Sort:ID">Sort:ID</option>
             <option value="Name A-Z">Name A-Z</option>

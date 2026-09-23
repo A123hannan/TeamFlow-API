@@ -71,7 +71,9 @@ function page() {
       {/* Tablet and Mobile Screen */}
       <button
         onClick={toggleMenu}
-        className={`fixed top-5 left-5 z-[101] flex cursor-pointer flex-col items-center justify-center gap-[5px] rounded-full bg-transparent p-2.5 backdrop-blur-md transition-transform lg:hidden`}
+        className="absolute left-3 top-3 z-[101] flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-lg bg-white/90 p-2.5 shadow-sm backdrop-blur-md transition-transform lg:hidden"
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isOpen}
       >
         <span
           className={`h-[3px] w-[26px] origin-center rounded-full bg-primary transition-all duration-300 ${isOpen ? "translate-y-[8px] rotate-45" : ""}`}
@@ -91,20 +93,31 @@ function page() {
 
       {/* Mobile / Tablet Sidebar Drawer */}
       <aside
-        className={`fixed top-0 left-0 z-[90] flex h-full w-[280px] flex-col justify-between bg-primary p-8 transition-transform duration-300 ease-in-out sm:w-[320px] lg:hidden ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed inset-y-0 left-0 z-[90] flex w-[min(86vw,320px)] flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="flex flex-col gap-6 pt-16">
-          {navLinks.map(({ path, title }) => (
-            <Link
-              key={path}
-              href={path}
-              onClick={() => setIsOpen(false)}
-              className="border-b border-white/10 py-2 text-lg font-medium text-white uppercase transition-colors last:border-b-0 hover:text-[#E9482B]"
-            >
-              {title}
-            </Link>
-          ))}
+        <div className="flex h-20 shrink-0 items-center gap-2 border-b-2 border-border px-5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-primary">
+            <Zap className="text-white" size={18} />
+          </div>
+          <p className="text-lg font-semibold text-slate-900">Team Flow</p>
         </div>
+        <nav className="flex flex-col gap-1 px-4 py-6">
+          {navLinks.map(({ path, title, logo: Icon }) => {
+            const isActive =
+              path === "/" ? pathname === "/" : pathname.startsWith(path);
+            return (
+              <Link
+                key={path}
+                href={path}
+                onClick={() => setIsOpen(false)}
+                className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors ${isActive ? "bg-bg-active text-primary" : "text-slate-600 hover:bg-slate-50 hover:text-primary"}`}
+              >
+                <Icon size={18} />
+                {title}
+              </Link>
+            );
+          })}
+        </nav>
       </aside>
     </>
   );

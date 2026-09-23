@@ -83,7 +83,7 @@ function page() {
               setCurrentPage(0);
             }}
             value={member}
-            className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
+            className="w-full cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 sm:w-auto"
           >
             <option value="All members">All members</option>
             {users.map((user) => (

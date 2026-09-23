@@ -18,7 +18,7 @@ function Page({
   noOfComments,
 }: PostCardProps) {
   return (
-    <div className="bg-white rounded-xl border border-slate-100 p-5 flex flex-col gap-3 hover:border-slate-200 hover:shadow-sm transition-all group">
+    <div className="w-full min-w-0 bg-white rounded-xl border border-slate-100 p-5 flex flex-col gap-3 hover:border-slate-200 hover:shadow-sm transition-all group">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="bg-cyan-600 w-7 h-7 text-xs rounded-full flex items-center justify-center font-semibold text-white shrink-0 ">

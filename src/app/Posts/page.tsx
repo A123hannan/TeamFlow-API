@@ -12,7 +12,7 @@ function page() {
   return (
     <div className="flex flex-col pb-[100px]">
       <Header title="Posts" />
-      <div className="space-y-6 max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="w-full max-w-7xl space-y-6 mx-auto px-4 sm:px-6">
         <Component1
           heading="Posts"
           subheading="Explore posts shared by team members."
