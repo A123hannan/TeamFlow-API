@@ -148,7 +148,7 @@ function page() {
         </div>
       ) : (
         <>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {postsToShow.map((post) => {
               const author =
                 users.find((user) => user.id === post.userId)?.name ||

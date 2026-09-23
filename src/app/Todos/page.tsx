@@ -6,9 +6,10 @@ import Component1 from "@/src/components/dashboardComponets/Component1/component
 import C1 from "@/src/components/Todos/Component1/page";
 import BarComponent from "@/src/components/Todos/BarComponent/page";
 import { useTodos } from "@/src/hooks/useTodos";
+import ResourceState from "@/src/components/common/ResourceState";
 
 function page() {
-  const { loading, error } = useTodos();
+  const { todos, loading, error } = useTodos();
 
   return (
     <div className="flex flex-col pb-[100px]">
@@ -21,16 +22,12 @@ function page() {
           button={true}
         />
 
-        {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
-
         {loading ? (
-          <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
-            Loading tasks...
-          </div>
+          <ResourceState message="Loading tasks. Please wait..." />
+        ) : error ? (
+          <ResourceState message={`Unable to load tasks: ${error}`} error />
+        ) : todos.length === 0 ? (
+          <ResourceState message="No tasks are available yet." />
         ) : (
           <>
             <C1 />

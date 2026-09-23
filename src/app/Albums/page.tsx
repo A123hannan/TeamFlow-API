@@ -5,9 +5,10 @@ import Header from "@/src/components/header/page";
 import Component1 from "@/src/components/dashboardComponets/Component1/component1";
 import BarComponent from "@/src/components/Albums/BarComponent/page";
 import { useAlbum } from "@/src/hooks/useAlbum";
+import ResourceState from "@/src/components/common/ResourceState";
 
 function page() {
-  const { loading, error } = useAlbum();
+  const { albums, loading, error } = useAlbum();
 
   return (
     <div className="flex flex-col pb-[100px]">
@@ -20,16 +21,12 @@ function page() {
           button={true}
         />
 
-        {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </div>
-        )}
-
         {loading ? (
-          <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
-            Loading albums...
-          </div>
+          <ResourceState message="Loading albums. Please wait..." />
+        ) : error ? (
+          <ResourceState message={`Unable to load albums: ${error}`} error />
+        ) : albums.length === 0 ? (
+          <ResourceState message="No albums are available yet." />
         ) : (
           <BarComponent />
         )}

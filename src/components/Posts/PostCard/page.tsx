@@ -18,9 +18,9 @@ function Page({
   noOfComments,
 }: PostCardProps) {
   return (
-    <div className="w-full min-w-0 bg-white rounded-xl border border-slate-100 p-5 flex flex-col gap-3 hover:border-slate-200 hover:shadow-sm transition-all group">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
+    <div className="w-full min-w-0 max-w-full overflow-hidden bg-white rounded-xl border border-slate-100 p-4 sm:p-5 flex flex-col gap-3 hover:border-slate-200 hover:shadow-sm transition-all group">
+      <div className="flex min-w-0 items-center justify-between">
+        <div className="flex min-w-0 items-center gap-2.5">
           <div className="bg-cyan-600 w-7 h-7 text-xs rounded-full flex items-center justify-center font-semibold text-white shrink-0 ">
             {authorName
               .trim()
@@ -29,24 +29,26 @@ function Page({
               .map((word) => word[0].toUpperCase())
               .join("")}
           </div>
-          <div>
-            <p className="text-xs font-medium text-slate-900">{authorName}</p>
-            <p className="text-xs text-slate-400">@{authorUserName}</p>
+          <div className="min-w-0">
+            <p className="truncate text-xs font-medium text-slate-900">
+              {authorName}
+            </p>
+            <p className="truncate text-xs text-slate-400">@{authorUserName}</p>
           </div>
         </div>
       </div>
       <div className="flex-1">
-        <h3 className="text-sm font-semibold text-slate-900 capitalize leading-snug line-clamp-2">
+        <h3 className="break-words text-sm font-semibold text-slate-900 capitalize leading-snug line-clamp-2">
           {title}
         </h3>
-        <p className="text-xs text-slate-500 mt-1.5 line-clamp-3 leading-relaxed">
+        <p className="break-words text-xs text-slate-500 mt-1.5 line-clamp-3 leading-relaxed">
           {body}
         </p>
       </div>
-      <div className="flex items-center justify-between pt-2 border-t border-slate-50">
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-50">
         <div className="flex items-center gap-1 text-slate-400">
           <MessageCircleIcon size={12} />
-          <span className="text-xs">{noOfComments} comment</span>
+          <span className="text-xs">{noOfComments} comments</span>
         </div>
         <Link
           href={`/Posts/${id}`}
