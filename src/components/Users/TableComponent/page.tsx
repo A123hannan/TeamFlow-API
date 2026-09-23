@@ -46,10 +46,10 @@ function page({ sortedUsers }: props) {
     currentPage * usersPerPage,
     (currentPage + 1) * usersPerPage,
   );
-  const handleNext = (e: any) => {
+  const handleNext = () => {
     setCurrentPage((prev) => (prev < noOfPages - 1 ? prev + 1 : noOfPages - 1));
   };
-  const handlePrevious = (e: any) => {
+  const handlePrevious = () => {
     setCurrentPage((prev) => (prev > 0 ? prev - 1 : 0));
   };
   const getVisiblePagesindex = () => {
@@ -156,15 +156,18 @@ function page({ sortedUsers }: props) {
         </div>
         <div className="border-t border-slate-50 px-5 flex items-center justify-between">
           <p className="text-xs text-slate-400 py-3">
-            Showing {currentPage * usersPerPage + 1}-
-            {(currentPage + 1) * usersPerPage} of {sortedUsers.length} members
+            Showing{" "}
+            {sortedUsers.length === 0 ? 0 : currentPage * usersPerPage + 1}-
+            {Math.min((currentPage + 1) * usersPerPage, sortedUsers.length)} of{" "}
+            {sortedUsers.length} members
           </p>
           <div
-            className={`${sortedUsers.length < usersPerPage ? "hidden" : ""} flex items-center justify-center gap-1 py-4`}
+            className={`${noOfPages <= 1 ? "hidden" : ""} flex items-center justify-center gap-1 py-4`}
           >
             <button
               className={`${currentPage === 0 ? "cursor-no-drop  disabled:opacity-45" : "cursor-pointer"}  flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors`}
               onClick={handlePrevious}
+              disabled={currentPage === 0}
             >
               <ChevronLeft size={14} />
               Prev
@@ -183,6 +186,7 @@ function page({ sortedUsers }: props) {
             <button
               className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               onClick={handleNext}
+              disabled={currentPage >= noOfPages - 1}
             >
               Next
               <ChevronRight size={14} />

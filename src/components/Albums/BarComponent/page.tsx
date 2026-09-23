@@ -34,17 +34,17 @@ function page() {
   const totalPages = Math.ceil(filteredalbums.length / cardsPerPage);
   const [currentPage, setCurrentPage] = useState(0);
   const handleNext = () => {
-    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+    setCurrentPage((prev) => Math.min(prev + 1, Math.max(totalPages - 1, 0)));
   };
   const handlePrevious = () => {
-    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
   };
   const getVisiblePagesIndex = () => {
     let pages = 4;
     let start = Math.max(0, currentPage - 1);
     let end = Math.min(totalPages, start + pages);
     if (end - start < pages) {
-      start = Math.min(0, end - pages);
+      start = Math.max(0, end - pages);
     }
     const tpages = [];
     for (let i = start; i < end; i++) {
@@ -78,7 +78,10 @@ function page() {
 
           {/* Distinct Members */}
           <select
-            onChange={(e) => setMember(e.target.value)}
+            onChange={(e) => {
+              setMember(e.target.value);
+              setCurrentPage(0);
+            }}
             value={member}
             className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
           >
@@ -110,10 +113,13 @@ function page() {
           );
         })}
       </div>
-      <div className="bg-white rounded-xl border border-slate-100">
+      <div
+        className={`${totalPages <= 1 ? "hidden" : ""} bg-white rounded-xl border border-slate-100`}
+      >
         <div className="flex items-center justify-center gap-1 py-4">
           <button
             onClick={handlePrevious}
+            disabled={currentPage === 0}
             className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             <ChevronLeft size={14} />
@@ -131,6 +137,7 @@ function page() {
             ))}
           <button
             onClick={handleNext}
+            disabled={currentPage >= totalPages - 1}
             className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Next <ChevronRight size={14} />

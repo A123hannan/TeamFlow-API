@@ -117,7 +117,10 @@ function page() {
           Loading members...
         </div>
       ) : (
-        <TableComponent sortedUsers={sortedUsers} />
+        <TableComponent
+          key={`${search}-${company}-${city}-${sort}`}
+          sortedUsers={sortedUsers}
+        />
       )}
     </>
   );

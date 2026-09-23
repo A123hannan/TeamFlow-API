@@ -19,10 +19,10 @@ function page() {
   const postsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(0);
   const handleNext = () => {
-    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+    setCurrentPage((prev) => Math.min(prev + 1, Math.max(totalPages - 1, 0)));
   };
   const handlePrevious = () => {
-    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
   };
   const getVisiblePagesIndex = () => {
     const pages = 5;
@@ -113,7 +113,10 @@ function page() {
 
           <select
             value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            onChange={(e) => {
+              setAuthor(e.target.value);
+              setCurrentPage(0);
+            }}
             className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
           >
             <option value="All Authors">All Authors</option>
@@ -127,7 +130,10 @@ function page() {
 
           <select
             value={sort}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(e) => {
+              setSort(e.target.value);
+              setCurrentPage(0);
+            }}
             className="cursor-pointer px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700"
           >
             <option value="Newest">Newest</option>
@@ -167,10 +173,13 @@ function page() {
               );
             })}
           </div>
-          <div className="bg-white rounded-xl border border-slate-100">
+          <div
+            className={`${totalPages <= 1 ? "hidden" : ""} bg-white rounded-xl border border-slate-100`}
+          >
             <div className="flex items-center justify-center gap-1 py-4">
               <button
                 onClick={handlePrevious}
+                disabled={currentPage === 0}
                 className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronLeft size={14} />
@@ -188,6 +197,7 @@ function page() {
                 ))}
               <button
                 onClick={handleNext}
+                disabled={currentPage >= totalPages - 1}
                 className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 Next <ChevronRight size={14} />
