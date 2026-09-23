@@ -12,14 +12,23 @@ function page() {
   const { photos } = usePhotos();
 
   const [member, setMember] = useState("All members");
+  const [search, setSearch] = useState("");
 
   const filteredalbums = albums.filter((album) => {
     const user = users.find((user) => user.id === album.userId);
     const memberMatch =
       member === "All members" || user?.id.toString() === member;
 
-    return memberMatch;
+    return (
+      memberMatch &&
+      album.title.toLowerCase().includes(search.trim().toLowerCase())
+    );
   });
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setCurrentPage(0);
+  };
 
   const cardsPerPage = 12;
   const totalPages = Math.ceil(filteredalbums.length / cardsPerPage);
@@ -61,6 +70,8 @@ function page() {
             <input
               type="text"
               placeholder="Search tasks..."
+              value={search}
+              onChange={(e) => handleSearch(e.target.value)}
               className="w-full pl-8 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             ></input>
           </div>
@@ -103,23 +114,24 @@ function page() {
         <div className="flex items-center justify-center gap-1 py-4">
           <button
             onClick={handlePrevious}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             <ChevronLeft size={14} />
             Prev
           </button>
-          {getVisiblePagesIndex().map((index) => (
-            <button
-              key={index}
-              className={`cursor-pointer  w-8 h-8 text-sm font-medium rounded-lg transition-colors ${index === currentPage ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
-              onClick={() => setCurrentPage(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {filteredalbums.length &&
+            getVisiblePagesIndex().map((index) => (
+              <button
+                key={index}
+                className={`cursor-pointer  w-8 h-8 text-sm font-medium rounded-lg transition-colors ${index === currentPage ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+                onClick={() => setCurrentPage(index)}
+              >
+                {index + 1}
+              </button>
+            ))}
           <button
             onClick={handleNext}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Next <ChevronRight size={14} />
           </button>

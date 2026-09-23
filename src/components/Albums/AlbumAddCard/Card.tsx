@@ -1,3 +1,5 @@
+"use client";
+
 import React, { SetStateAction, useState } from "react";
 import { useAlbum } from "@/src/hooks/useAlbum";
 import { useUsers } from "@/src/hooks/useUsers";
@@ -23,7 +25,7 @@ function Card({ setAddAlbumOpen }: props) {
     }));
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (typeof formData.userId !== "number" || formData.userId <= 0) {
       return;

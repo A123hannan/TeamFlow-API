@@ -8,8 +8,10 @@ export const useAlbum=()=>{
     const dispatch =useDispatch<AppDispatch>()
     const{albums,error,loading}=useSelector((state:RootState)=>state.albums);
     useEffect(() => {
-        dispatch(fetchAlbums())
-    }, [dispatch]);
+        if (albums.length === 0 && !loading && !error) {
+            dispatch(fetchAlbums())
+        }
+    }, [albums.length, dispatch, error, loading]);
     const addAlbums=(album:CreateAlbumPayload)=>{
         dispatch(addAlbum(album))
     }

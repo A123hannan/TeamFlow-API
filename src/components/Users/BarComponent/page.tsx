@@ -6,7 +6,8 @@ import { useUsers } from "@/src/hooks/useUsers";
 import TableComponent from "../TableComponent/page";
 
 function page() {
-  const { users } = useUsers();
+  const { users, loading, error } = useUsers();
+  const [search, setSearch] = useState("");
   const [company, setCompany] = useState("All Companies");
   const [city, setCity] = useState("All Cities");
   const [sort, setSort] = useState("Sort:ID");
@@ -24,10 +25,20 @@ function page() {
     "Actions",
   ];
   const filteredUsers = users.filter((user) => {
+    const searchMatch = [
+      user.name,
+      user.username,
+      user.email,
+      user.company.name,
+      user.address.city,
+    ]
+      .join(" ")
+      .toLowerCase()
+      .includes(search.trim().toLowerCase());
     const companyMatch =
       company === "All Companies" || user.company.name === company;
     const cityMatch = city === "All Cities" || user.address.city === city;
-    return companyMatch && cityMatch;
+    return searchMatch && companyMatch && cityMatch;
   });
   const sortedUsers = [...filteredUsers].sort((a, b) => {
     if (sort === "Sort:ID") {
@@ -41,6 +52,14 @@ function page() {
     }
     return 0;
   });
+  if (error) {
+    return (
+      <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        {error}
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="bg-white rounded-xl border border-slate-100 p-4">
@@ -52,6 +71,8 @@ function page() {
             />
             <input
               placeholder="Search members"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-8 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               type="text"
             />
@@ -91,7 +112,13 @@ function page() {
           </select>
         </div>
       </div>
-      <TableComponent sortedUsers={sortedUsers} />
+      {loading ? (
+        <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
+          Loading members...
+        </div>
+      ) : (
+        <TableComponent sortedUsers={sortedUsers} />
+      )}
     </>
   );
 }

@@ -9,8 +9,10 @@ export const useUsers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { users, loading, error } = useSelector((state: RootState) => state.users); 
   useEffect(() => {
-    dispatch(fetchUsers()).unwrap();
-  }, [dispatch]);
+    if (users.length === 0 && !loading && !error) {
+      dispatch(fetchUsers()).unwrap();
+    }
+  }, [dispatch, error, loading, users.length]);
 
   const addUser = (user: CreateUserPayload) => {
     dispatch(addUsers(user)).unwrap();

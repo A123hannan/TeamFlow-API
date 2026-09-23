@@ -9,8 +9,10 @@ export const useTodos = () => {
     const dispatch=useDispatch<AppDispatch>();
     const {todos,loading,error}=useSelector((state:RootState)=>state.todos);
     useEffect(()=>{
-        dispatch(fetchTodos());
-    },[dispatch]);
+        if (todos.length === 0 && !loading && !error) {
+            dispatch(fetchTodos());
+        }
+    },[dispatch, error, loading, todos.length]);
     const addTodo=(todo:CreateTodoPayload)=>{
         dispatch(addTodos(todo));
     };

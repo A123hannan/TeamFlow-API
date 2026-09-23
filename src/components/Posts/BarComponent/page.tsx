@@ -8,12 +8,13 @@ import { useComments } from "@/src/hooks/useComments";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PostCard from "../PostCard/page";
 function page() {
-  const { posts } = usePosts();
+  const { posts, loading, error } = usePosts();
   const { users } = useUsers();
   const { comments } = useComments();
 
   const [author, setAuthor] = useState("All Authors");
   const [sort, setSort] = useState("Newest");
+  const [search, setSearch] = useState("");
 
   const postsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(0);
@@ -50,8 +51,17 @@ function page() {
 
     const authorMatch = author === "All Authors" || user?.name === author;
 
-    return authorMatch;
+    const searchMatch = [post.title, post.body]
+      .join(" ")
+      .toLowerCase()
+      .includes(search.trim().toLowerCase());
+    return authorMatch && searchMatch;
   });
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setCurrentPage(0);
+  };
 
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     if (sort === "Newest") {
@@ -74,6 +84,14 @@ function page() {
     currentPage * postsPerPage,
     postsPerPage * (currentPage + 1),
   );
+  if (error) {
+    return (
+      <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        {error}
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="bg-white rounded-xl border border-slate-100 p-4">
@@ -86,6 +104,8 @@ function page() {
 
             <input
               placeholder="Search posts"
+              value={search}
+              onChange={(e) => handleSearch(e.target.value)}
               className="w-full pl-8 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               type="text"
             />
@@ -116,55 +136,66 @@ function page() {
           </select>
         </div>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {postsToShow.map((post) => {
-          const author =
-            users.find((user) => user.id === post.userId)?.name || "Unknown";
-          const authorUserName =
-            users.find((user) => user.id === post.userId)?.username || "Unkown";
-          const noOfComments = comments.filter(
-            (comment) => comment.postId === post.id,
-          ).length;
-          return (
-            <PostCard
-              key={post.id}
-              userId={post.userId}
-              id={post.id}
-              body={post.body}
-              title={post.title}
-              authorName={author}
-              authorUserName={authorUserName}
-              noOfComments={noOfComments}
-            />
-          );
-        })}
-      </div>
-      <div className="bg-white rounded-xl border border-slate-100">
-        <div className="flex items-center justify-center gap-1 py-4">
-          <button
-            onClick={handlePrevious}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            <ChevronLeft size={14} />
-            Prev
-          </button>
-          {getVisiblePagesIndex().map((index) => (
-            <button
-              key={index}
-              className={`cursor-pointer  w-8 h-8 text-sm font-medium rounded-lg transition-colors ${index === currentPage ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
-              onClick={() => setCurrentPage(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            onClick={handleNext}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            Next <ChevronRight size={14} />
-          </button>
+      {loading ? (
+        <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
+          Loading posts...
         </div>
-      </div>
+      ) : (
+        <>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {postsToShow.map((post) => {
+              const author =
+                users.find((user) => user.id === post.userId)?.name ||
+                "Unknown";
+              const authorUserName =
+                users.find((user) => user.id === post.userId)?.username ||
+                "Unkown";
+              const noOfComments = comments.filter(
+                (comment) => comment.postId === post.id,
+              ).length;
+              return (
+                <PostCard
+                  key={post.id}
+                  userId={post.userId}
+                  id={post.id}
+                  body={post.body}
+                  title={post.title}
+                  authorName={author}
+                  authorUserName={authorUserName}
+                  noOfComments={noOfComments}
+                />
+              );
+            })}
+          </div>
+          <div className="bg-white rounded-xl border border-slate-100">
+            <div className="flex items-center justify-center gap-1 py-4">
+              <button
+                onClick={handlePrevious}
+                className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronLeft size={14} />
+                Prev
+              </button>
+              {sortedPosts.length > 0 &&
+                getVisiblePagesIndex().map((index) => (
+                  <button
+                    key={index}
+                    className={`cursor-pointer  w-8 h-8 text-sm font-medium rounded-lg transition-colors ${index === currentPage ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+                    onClick={() => setCurrentPage(index)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              <button
+                onClick={handleNext}
+                className="cursor-pointer flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              >
+                Next <ChevronRight size={14} />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-"use Client";
+"use client";
 import React from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";

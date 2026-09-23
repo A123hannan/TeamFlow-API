@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { CreateCommentPayload } from "@/src/types/comments";
 import { X } from "lucide-react";

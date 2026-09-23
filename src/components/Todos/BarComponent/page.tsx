@@ -14,6 +14,7 @@ function page() {
   const [active, setActive] = useState("All");
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+
   const handleAll = () => {
     setActive("All");
     setCurrentPage(0);
@@ -189,7 +190,7 @@ function page() {
             Prev
           </button>
           {/* {Array.from({ length: noOfPages }).map((_, index) => ( */}
-          {getVisiblePagesIndex().map((index) => (
+          {sortedTodos.length>0&&getVisiblePagesIndex().map((index) => (
             <button
               className={`cursor-pointer  w-8 h-8 text-sm font-medium rounded-lg transition-colors ${index === currentPage ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"}`}
               onClick={() => setCurrentPage(index)}

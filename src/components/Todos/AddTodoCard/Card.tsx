@@ -1,3 +1,5 @@
+"use client";
+
 import React, { SetStateAction, useState } from "react";
 import { useTodos } from "@/src/hooks/useTodos";
 import { useUsers } from "@/src/hooks/useUsers";

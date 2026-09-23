@@ -9,8 +9,10 @@ export const usePosts=()=>{
     const dispatch=useDispatch<AppDispatch>();
     const {posts,loading,error} =useSelector((state:RootState)=>state.posts)
     useEffect(()=>{
-        dispatch(fetchPosts())
-    },[dispatch]);
+        if (posts.length === 0 && !loading && !error) {
+            dispatch(fetchPosts())
+        }
+    },[dispatch, error, loading, posts.length]);
     const addPosts=(post:CreatePostPayload)=>{
         dispatch(addPost(post));
     }
