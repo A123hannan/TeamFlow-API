@@ -71,7 +71,7 @@ function page() {
       {/* Tablet and Mobile Screen */}
       <button
         onClick={toggleMenu}
-        className="absolute left-3 top-3 z-[101] flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-lg bg-white/90 p-2.5 shadow-sm backdrop-blur-md transition-transform lg:hidden"
+        className="fixed left-3 top-3 z-[101] flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-lg bg-white/90 p-2.5 shadow-sm backdrop-blur-md transition-transform lg:hidden"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
       >
@@ -95,13 +95,13 @@ function page() {
       <aside
         className={`fixed inset-y-0 left-0 z-[90] flex w-[min(86vw,320px)] flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="flex h-20 shrink-0 items-center gap-2 border-b-2 border-border px-5">
+        <div className="relative top-[40px] flex h-20 shrink-0 items-center gap-2 border-b-2 border-border px-5">
           <div className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-primary">
             <Zap className="text-white" size={18} />
           </div>
           <p className="text-lg font-semibold text-slate-900">Team Flow</p>
         </div>
-        <nav className="flex flex-col gap-1 px-4 py-6">
+        <nav className="relative top-[20px] flex flex-col gap-1 px-4 py-6">
           {navLinks.map(({ path, title, logo: Icon }) => {
             const isActive =
               path === "/" ? pathname === "/" : pathname.startsWith(path);

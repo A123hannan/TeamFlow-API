@@ -28,7 +28,7 @@ function Header({ title }: props) {
   };
 
   return (
-    <header className="relative z-40  min-h-[64px] w-full shrink-0 border-b-2 border-border py-3 bg-white px-3 pl-16 sm:px-5 sm:pl-20 lg:h-[80px] lg:px-6 lg:pl-6">
+    <header className="sticky top-0 z-40 h-16 w-full shrink-0 border-b-2 border-border bg-white px-3 pl-16 sm:px-5 sm:pl-20 lg:h-20 lg:px-6 lg:pl-6">
       <div className="max-w-7xl mx-auto flex h-full min-w-0 items-center justify-between gap-3 sm:gap-4">
         <h1 className="min-w-0 max-w-[30%] shrink-0 truncate text-base font-semibold text-slate-900 sm:max-w-none sm:text-lg">
           {title}
