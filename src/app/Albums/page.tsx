@@ -6,8 +6,9 @@ import Component1 from "@/src/components/dashboardComponets/Component1/component
 import BarComponent from "@/src/components/Albums/BarComponent/page";
 import { useAlbum } from "@/src/hooks/useAlbum";
 import ResourceState from "@/src/components/common/ResourceState";
+import { AlbumCardSkeleton } from "@/src/components/LoadingSkeleton/page";
 
-function page() {
+function AlbumsPage() {
   const { albums, loading, error } = useAlbum();
 
   return (
@@ -21,9 +22,13 @@ function page() {
           button={true}
         />
 
-        {loading ? (
-          <ResourceState message="Loading albums. Please wait..." />
-        ) : error ? (
+        {loading && albums.length === 0 ? (
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {Array.from({ length: 8 }, (_, index) => (
+              <AlbumCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : error && albums.length === 0 ? (
           <ResourceState message={`Unable to load albums: ${error}`} error />
         ) : (
           <BarComponent />
@@ -33,4 +38,4 @@ function page() {
   );
 }
 
-export default page;
+export default AlbumsPage;

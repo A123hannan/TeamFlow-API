@@ -82,7 +82,6 @@ const todoSlice=createSlice({
             state.error=action.payload as string|null;
         })
         .addCase(addTodos.pending,(state)=>{
-            state.loading=true;
             state.error=null;
         })
         .addCase(addTodos.fulfilled,(state,action)=>{
@@ -95,7 +94,6 @@ const todoSlice=createSlice({
         })
         .addCase(EditTodo.pending,(state)=>{
             state.error=null;
-            state.loading=true;
         })
         .addCase(EditTodo.fulfilled,(state,action)=>{
             state.loading=false;
@@ -110,7 +108,6 @@ const todoSlice=createSlice({
         })
         .addCase(RemoveTodo.pending,(state)=>{
             state.error=null;
-            state.loading=true;
         })
         .addCase(RemoveTodo.fulfilled,(state,action)=>{
             state.loading=false;

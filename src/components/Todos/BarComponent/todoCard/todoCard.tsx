@@ -59,18 +59,18 @@ function TodoCard({ userId, id, title, completed, onToggle }: TodoCardProps) {
             {userName}
           </span>
         </div>
-        <div className="cursor-pointer flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
           <button
-            className="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors"
+            className="cursor-pointer p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors"
             onClick={() => setOpenUpdateTask(true)}
           >
             <Pencil size={12} />
           </button>
           <button
-            className="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors"
+            className=" cursor-pointer p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors"
             onClick={() => setOpenDeleteTask(true)}
           >
-            <Pencil size={12} />
+            {/* <Pencil size={12} /> */}
             <Trash size={12} />
           </button>
         </div>

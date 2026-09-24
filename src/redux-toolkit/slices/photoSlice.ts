@@ -35,7 +35,7 @@ const photoSlice = createSlice({
       .addCase(fetchPhotos.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(fetchPhotos.fulfilled, (state, action) => { state.loading = false; state.photos = action.payload; })
       .addCase(fetchPhotos.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-      .addCase(addPhoto.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(addPhoto.pending, (state) => { state.error = null; })
       .addCase(addPhoto.fulfilled, (state, action) => { state.loading = false; state.photos.push(action.payload); })
       .addCase(addPhoto.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; });
   },

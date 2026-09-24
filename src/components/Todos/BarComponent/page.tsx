@@ -5,7 +5,8 @@ import { useUsers } from "@/src/hooks/useUsers";
 import { useIsMobile } from "@/src/hooks/useIsMobile";
 import { SearchIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import TodoCard from "../BarComponent/todoCard/todoCard";
-function page() {
+import ResourceState from "@/src/components/common/ResourceState";
+function TodosBar() {
   const { todos, toggleTask } = useTodos();
   const { users } = useUsers();
   const isMobile = useIsMobile();
@@ -89,6 +90,10 @@ function page() {
     currentPage * cardsPerPage,
     (currentPage + 1) * cardsPerPage,
   );
+  if (todos.length === 0) {
+    return <ResourceState message="No tasks found." />;
+  }
+
   return (
     <>
       <div className="bg-white rounded-xl border border-slate-100 p-4">
@@ -164,20 +169,24 @@ function page() {
           </select>
         </div>
       </div>
-      <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
-        <div className="divide-y divide-slate-50">
-          {todosToShow.map((todo) => (
-            <TodoCard
-              key={todo.id}
-              id={todo.id}
-              userId={todo.userId}
-              title={todo.title}
-              completed={todo.completed}
-              onToggle={toggleTask}
-            />
-          ))}
+      {sortedTodos.length === 0 ? (
+        <ResourceState message="No tasks match your filters." />
+      ) : (
+        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+          <div className="divide-y divide-slate-50">
+            {todosToShow.map((todo) => (
+              <TodoCard
+                key={todo.id}
+                id={todo.id}
+                userId={todo.userId}
+                title={todo.title}
+                completed={todo.completed}
+                onToggle={toggleTask}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="border-t border-slate-50 px-5 flex items-center justify-between">
         <p className="text-xs text-slate-400 py-3">
@@ -219,4 +228,4 @@ function page() {
   );
 }
 
-export default page;
+export default TodosBar;

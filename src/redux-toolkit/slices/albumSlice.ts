@@ -51,7 +51,8 @@ export const RemoveAlbum=createAsyncThunk(
     "albums/removeAlbum",
     async(id:number,{rejectWithValue})=>{
         try{
-            return await deleteAlbum(id);
+            await deleteAlbum(id);
+            return id;
         }
         catch(error:any){
             return rejectWithValue("Failed to delete teh Album")
@@ -78,7 +79,6 @@ const albumSlice=createSlice({
         })
         .addCase(addAlbum.pending, (state) => {
                 state.error = null;
-                state.loading = true;
             })
         .addCase(addAlbum.fulfilled, (state, action) => {
                 state.loading = false;
@@ -90,7 +90,6 @@ const albumSlice=createSlice({
             })
         .addCase(EditAlbum.pending,(state)=>{
             state.error=null;
-            state.loading=true;
 
         })
         .addCase(EditAlbum.fulfilled,(state,action)=>{
@@ -101,7 +100,6 @@ const albumSlice=createSlice({
             }
         })
         .addCase(RemoveAlbum.pending, (state) => {
-            state.loading = true;
             state.error = null;
         })
         .addCase(RemoveAlbum.fulfilled, (state, action) => {

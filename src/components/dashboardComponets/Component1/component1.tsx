@@ -1,8 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { RefreshCcw, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/src/redux-toolkit/store/store";
+import { fetchUsers } from "@/src/redux-toolkit/slices/userslice";
+import { fetchPosts } from "@/src/redux-toolkit/slices/postSlice";
+import { fetchTodos } from "@/src/redux-toolkit/slices/todoSlice";
+import { fetchAlbums } from "@/src/redux-toolkit/slices/albumSlice";
 import AddUserCard from "@/src/components/Users/AddUserCard/card";
 import AddPostCard from "@/src/components/Posts/AddPostCard/Card";
 import AddTodoCard from "@/src/components/Todos/AddTodoCard/Card";
@@ -13,8 +18,8 @@ interface props {
   button?: boolean;
   buttonText?: string;
 }
-function component1({ heading, subheading, button, buttonText }: props) {
-  const router = useRouter();
+function Component1({ heading, subheading, button, buttonText }: props) {
+  const dispatch = useDispatch<AppDispatch>();
   const [addUserOpen, setAddUserOpen] = useState(false);
   const [addPostOpen, setAddPostOpen] = useState(false);
   const [addTodoOpen, setAddTodoOpen] = useState(false);
@@ -22,8 +27,10 @@ function component1({ heading, subheading, button, buttonText }: props) {
   const PathName = usePathname();
 
   const handleRefresh = () => {
-    // router.refresh();
-    window.location.reload();
+    if (PathName === "/Users") dispatch(fetchUsers());
+    if (PathName === "/Posts") dispatch(fetchPosts());
+    if (PathName === "/Todos") dispatch(fetchTodos());
+    if (PathName === "/Albums") dispatch(fetchAlbums());
   };
   const handleClick = () => {
     if (!button) {
@@ -83,4 +90,4 @@ function component1({ heading, subheading, button, buttonText }: props) {
   );
 }
 
-export default component1;
+export default Component1;

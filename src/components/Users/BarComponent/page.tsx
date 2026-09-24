@@ -4,8 +4,9 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useUsers } from "@/src/hooks/useUsers";
 import TableComponent from "../TableComponent/page";
-
-function page() {
+import { UserSkeleton } from "@/src/components/LoadingSkeleton/page";
+import ResourceState from "@/src/components/common/ResourceState";
+function UsersBar() {
   const { users, loading, error } = useUsers();
   const [search, setSearch] = useState("");
   const [company, setCompany] = useState("All Companies");
@@ -16,14 +17,6 @@ function page() {
   ];
   const distinctCities = [...new Set(users.map((user) => user.address.city))];
 
-  const columnNames = [
-    "Member",
-    "username",
-    "Email",
-    "Company",
-    "City",
-    "Actions",
-  ];
   const filteredUsers = users.filter((user) => {
     const searchMatch = [
       user.name,
@@ -58,6 +51,10 @@ function page() {
         {error}
       </div>
     );
+  }
+
+  if (users.length === 0) {
+    return <ResourceState message="No members found." />;
   }
 
   return (
@@ -112,10 +109,10 @@ function page() {
           </select>
         </div>
       </div>
-      {loading ? (
-        <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
-          Loading members...
-        </div>
+      {loading && users.length === 0 ? (
+        <UserSkeleton />
+      ) : sortedUsers.length === 0 ? (
+        <ResourceState message="No members match your filters." />
       ) : (
         <TableComponent
           key={`${search}-${company}-${city}-${sort}`}
@@ -126,4 +123,4 @@ function page() {
   );
 }
 
-export default page;
+export default UsersBar;

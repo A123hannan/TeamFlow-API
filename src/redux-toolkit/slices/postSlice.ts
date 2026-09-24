@@ -52,16 +52,15 @@ const postSlice=createSlice({
             state.error=action.payload as string|null
         })
         .addCase(addPost.pending,(state)=>{
-            state.loading=true;
             state.error=null;
         })
         .addCase(addPost.fulfilled,(state,action)=>{
             state.loading=false;
             state.posts.push(action.payload as Posts);
         })
-        .addCase(addPost.rejected,(state)=>{
-            state.loading=true;
-            state.error=null;
+        .addCase(addPost.rejected,(state, action)=>{
+            state.loading=false;
+            state.error=action.payload as string|null;
         })
         
     }

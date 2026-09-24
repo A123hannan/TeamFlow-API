@@ -6,7 +6,8 @@ import { usePhotos } from "@/src/hooks/usePhotos";
 import { SearchIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import AlbumCard from "../AlbumsCard/page";
 import { useIsMobile } from "@/src/hooks/useIsMobile";
-function page() {
+import ResourceState from "@/src/components/common/ResourceState";
+function AlbumsBar() {
   const { albums } = useAlbum();
   const { users } = useUsers();
   const { photos } = usePhotos();
@@ -44,9 +45,9 @@ function page() {
     setCurrentPage((prev) => Math.max(prev - 1, 0));
   };
   const getVisiblePagesIndex = () => {
-    let pages = 4;
+    const pages = 4;
     let start = Math.max(0, currentPage - 1);
-    let end = Math.min(totalPages, start + pages);
+    const end = Math.min(totalPages, start + pages);
     if (end - start < pages) {
       start = Math.max(0, end - pages);
     }
@@ -60,7 +61,10 @@ function page() {
     currentPage * cardsPerPage,
     (currentPage + 1) * cardsPerPage,
   );
-  console.log(filteredalbums);
+  if (albums.length === 0) {
+    return <ResourceState message="No albums found." />;
+  }
+
   return (
     <>
       <div className="bg-white rounded-xl border border-slate-100 p-4">
@@ -98,25 +102,29 @@ function page() {
           </select>
         </div>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {albumsToShow.map((album, index) => {
-          const albumAuthor =
-            users.find((user) => user.id === album.userId)?.name || "unknown";
-          const noOfPhotosInAlbums = photos.filter(
-            (photo) => photo.albumId === album.id,
-          ).length;
-          return (
-            <AlbumCard
-              key={album.id}
-              id={album.id}
-              albumTitle={album.title}
-              noOfPhotosInAlbum={noOfPhotosInAlbums}
-              albumAuthor={albumAuthor}
-              index={index}
-            />
-          );
-        })}
-      </div>
+      {filteredalbums.length === 0 ? (
+        <ResourceState message="No albums match your filters." />
+      ) : (
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {albumsToShow.map((album, index) => {
+            const albumAuthor =
+              users.find((user) => user.id === album.userId)?.name || "unknown";
+            const noOfPhotosInAlbums = photos.filter(
+              (photo) => photo.albumId === album.id,
+            ).length;
+            return (
+              <AlbumCard
+                key={album.id}
+                id={album.id}
+                albumTitle={album.title}
+                noOfPhotosInAlbum={noOfPhotosInAlbums}
+                albumAuthor={albumAuthor}
+                index={index}
+              />
+            );
+          })}
+        </div>
+      )}
       <div
         className={`${totalPages <= 1 ? "hidden" : ""} bg-white rounded-xl border border-slate-100`}
       >
@@ -152,4 +160,4 @@ function page() {
   );
 }
 
-export default page;
+export default AlbumsBar;

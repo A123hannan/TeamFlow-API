@@ -8,7 +8,8 @@ import { useComments } from "@/src/hooks/useComments";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PostCard from "../PostCard/page";
 import { useIsMobile } from "@/src/hooks/useIsMobile";
-function page() {
+import ResourceState from "@/src/components/common/ResourceState";
+function PostsBar() {
   const { posts, loading, error } = usePosts();
   const { users } = useUsers();
   const { comments } = useComments();
@@ -147,10 +148,14 @@ function page() {
           </select>
         </div>
       </div>
-      {loading ? (
+      {loading && posts.length === 0 ? (
         <div className="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
           Loading posts...
         </div>
+      ) : posts.length === 0 ? (
+        <ResourceState message="No posts found." />
+      ) : sortedPosts.length === 0 ? (
+        <ResourceState message="No posts match your filters." />
       ) : (
         <>
           <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -215,4 +220,4 @@ function page() {
   );
 }
 
-export default page;
+export default PostsBar;

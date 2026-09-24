@@ -102,7 +102,6 @@ const userSlice=createSlice({
             state.error=action.payload as string|null;
         })
         .addCase(addUsers.pending,(state)=>{
-            state.loading=true;
             state.error=null;
         })
         .addCase(addUsers.fulfilled,(state,action)=>{
@@ -114,7 +113,6 @@ const userSlice=createSlice({
             state.error=action.payload as string|null;
         })  
         .addCase(EditUser.pending,(state)=>{
-            state.loading=true;
             state.error=null;
         })
         .addCase(EditUser.fulfilled, (state, action) => {
@@ -129,7 +127,6 @@ const userSlice=createSlice({
             state.error=action.payload as string|null
         })
         .addCase(RemoveUser.pending, (state) => {
-                state.loading = true;
                 state.error = null;
             })
             .addCase(RemoveUser.fulfilled, (state, action) => {

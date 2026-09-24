@@ -7,8 +7,9 @@ import C1 from "@/src/components/Todos/Component1/page";
 import BarComponent from "@/src/components/Todos/BarComponent/page";
 import { useTodos } from "@/src/hooks/useTodos";
 import ResourceState from "@/src/components/common/ResourceState";
+import { TaskSkeleton } from "@/src/components/LoadingSkeleton/page";
 
-function page() {
+function TodosPage() {
   const { todos, loading, error } = useTodos();
 
   return (
@@ -22,9 +23,13 @@ function page() {
           button={true}
         />
 
-        {loading ? (
-          <ResourceState message="Loading tasks. Please wait..." />
-        ) : error ? (
+        {loading && todos.length === 0 ? (
+          <div className="overflow-hidden rounded-xl border border-slate-100 bg-white">
+            {Array.from({ length: 8 }, (_, index) => (
+              <TaskSkeleton key={index} />
+            ))}
+          </div>
+        ) : error && todos.length === 0 ? (
           <ResourceState message={`Unable to load tasks: ${error}`} error />
         ) : (
           <>
@@ -37,4 +42,4 @@ function page() {
   );
 }
 
-export default page;
+export default TodosPage;
