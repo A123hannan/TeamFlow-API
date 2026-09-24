@@ -1,6 +1,6 @@
-import {getTodos, createTodo} from "@/src/controllers/todoController";
+import {getTodos, createTodo,deleteTodo,updateTodo} from "@/src/controllers/todoController";
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {todos, CreateTodoPayload} from "@/src/types/todos";
+import {todos, CreateTodoPayload,UpdateTodoPayload} from "@/src/types/todos";
 
 interface TodoState{
     todos:todos[];
@@ -17,7 +17,7 @@ export const fetchTodos=createAsyncThunk(
     async(_,{rejectWithValue})=>{
         try{
         return await getTodos()}
-        catch(error:any){
+        catch{
             return rejectWithValue("Failed to fetch todos");
         }
     }
@@ -25,12 +25,34 @@ export const fetchTodos=createAsyncThunk(
 
 export const addTodos=createAsyncThunk(
     "todos/addTodo",
-    async(todos:CreateTodoPayload,{rejectWithValue})=>{
+    async(todo:CreateTodoPayload,{rejectWithValue})=>{
         try{
-            return await createTodo(todos);
+            return await createTodo(todo);
         }
-        catch(error:any){
+        catch{
             return rejectWithValue("Failed to add todo");
+        }
+    }
+)
+export const EditTodo=createAsyncThunk(
+  "todos/updateTodo",
+  async(todo:UpdateTodoPayload,{rejectWithValue})=>{
+    try{
+        return await updateTodo(todo)
+    }
+    catch{
+        return rejectWithValue("failed to update Task")
+    }
+  }   
+)
+export const RemoveTodo=createAsyncThunk(
+    "todos/deleteTodo",
+    async(id:number,{rejectWithValue})=>{
+        try{
+            return await deleteTodo(id)
+        }
+        catch{
+            return rejectWithValue("Failed to delete teh Task")
         }
     }
 )
@@ -70,6 +92,33 @@ const todoSlice=createSlice({
         .addCase(addTodos.rejected,(state,action)=>{
             state.loading=false;
             state.error=action.payload as string|null;
+        })
+        .addCase(EditTodo.pending,(state)=>{
+            state.error=null;
+            state.loading=true;
+        })
+        .addCase(EditTodo.fulfilled,(state,action)=>{
+            state.loading=false;
+            const index=state.todos.findIndex((todo)=>todo.id===action.payload.id);
+            if(index !== -1){
+                state.todos[index]={...state.todos[index],...action.payload}
+            }
+        })
+        .addCase(EditTodo.rejected,(state,action)=>{
+            state.loading=false;
+            state.error=action.payload as string
+        })
+        .addCase(RemoveTodo.pending,(state)=>{
+            state.error=null;
+            state.loading=true;
+        })
+        .addCase(RemoveTodo.fulfilled,(state,action)=>{
+            state.loading=false;
+            state.todos=state.todos.filter((todo)=>todo.id !== action.meta.arg);
+        })
+        .addCase(RemoveTodo.rejected,(state,action)=>{
+            state.loading=false;
+            state.error=action.payload as string;
         })
     }
 });

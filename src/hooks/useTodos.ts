@@ -1,8 +1,8 @@
 "use client";
 import {useSelector, useDispatch} from "react-redux";
-import {fetchTodos,addTodos,toggleTodo} from "@/src/redux-toolkit/slices/todoSlice";
+import {fetchTodos,addTodos,toggleTodo,RemoveTodo,EditTodo} from "@/src/redux-toolkit/slices/todoSlice";
 import { RootState, AppDispatch } from "@/src/redux-toolkit/store/store";
-import {todos,CreateTodoPayload} from "@/src/types/todos"
+import {todos,CreateTodoPayload,UpdateTodoPayload} from "@/src/types/todos"
 import {useEffect} from "react";
 export const useTodos = () => {
 
@@ -19,5 +19,11 @@ export const useTodos = () => {
     const toggleTask = (id: number) => {
         dispatch(toggleTodo(id));
     };
-     return { todos, loading, error, addTodo, toggleTask };
+    const deleteTodo=(id:number)=>{
+        dispatch(RemoveTodo(id));
+    }
+    const updateTodo=(todo:UpdateTodoPayload)=>{
+        dispatch(EditTodo(todo))
+    }
+     return { todos, loading, error, addTodo,deleteTodo,updateTodo, toggleTask };
 }

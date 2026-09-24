@@ -9,3 +9,9 @@ export interface CreateTodoPayload{
     title:string,
     completed:boolean
 }
+export interface UpdateTodoPayload{
+    id:number,
+    userId:number,
+    title:string,
+    completed:boolean
+}
